@@ -4,10 +4,20 @@ interface Star {
   x: number;
   y: number;
   z: number;
+  speed: number;
+  trail: number;
+}
+
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
   size: number;
   opacity: number;
-  twinkleSpeed: number;
-  twinkleOffset: number;
+  hue: number;
+  life: number;
+  maxLife: number;
 }
 
 export default function StarfieldBackground() {
@@ -21,84 +31,126 @@ export default function StarfieldBackground() {
 
     let animId: number;
     let stars: Star[] = [];
+    let particles: Particle[] = [];
+    let cx = 0;
+    let cy = 0;
 
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      cx = canvas.width / 2;
+      cy = canvas.height / 2;
       initStars();
     };
 
     const initStars = () => {
-      const count = Math.floor((canvas.width * canvas.height) / 2500);
+      const count = 400;
       stars = Array.from({ length: count }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        z: Math.random() * 3 + 0.5,
-        size: Math.random() * 2 + 0.3,
-        opacity: Math.random() * 0.6 + 0.2,
-        twinkleSpeed: Math.random() * 0.02 + 0.005,
-        twinkleOffset: Math.random() * Math.PI * 2,
+        x: (Math.random() - 0.5) * canvas.width * 2,
+        y: (Math.random() - 0.5) * canvas.height * 2,
+        z: Math.random() * 1500 + 1,
+        speed: Math.random() * 2 + 1,
+        trail: Math.random() * 0.4 + 0.1,
       }));
     };
 
-    const drawNebula = (time: number) => {
-      // Subtle nebula glow centers
-      const nebulae = [
-        { cx: canvas.width * 0.3, cy: canvas.height * 0.25, r: 300, h: 260, s: 60, l: 15 },
-        { cx: canvas.width * 0.7, cy: canvas.height * 0.6, r: 250, h: 280, s: 50, l: 12 },
-        { cx: canvas.width * 0.5, cy: canvas.height * 0.8, r: 200, h: 220, s: 40, l: 10 },
-      ];
-
-      for (const n of nebulae) {
-        const drift = Math.sin(time * 0.0003 + n.h) * 20;
-        const grad = ctx.createRadialGradient(
-          n.cx + drift, n.cy, 0,
-          n.cx + drift, n.cy, n.r
-        );
-        grad.addColorStop(0, `hsla(${n.h}, ${n.s}%, ${n.l}%, 0.08)`);
-        grad.addColorStop(0.5, `hsla(${n.h}, ${n.s}%, ${n.l}%, 0.03)`);
-        grad.addColorStop(1, "transparent");
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-      }
+    // Spawn dust particles
+    const spawnParticle = () => {
+      if (particles.length > 60) return;
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        size: Math.random() * 40 + 20,
+        opacity: Math.random() * 0.04 + 0.01,
+        hue: Math.random() > 0.5 ? 260 : 210,
+        life: 0,
+        maxLife: Math.random() * 600 + 300,
+      });
     };
 
     const draw = (time: number) => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Fade trail instead of full clear — gives motion blur
+      ctx.fillStyle = "rgba(5, 5, 15, 0.15)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Nebula layers
-      drawNebula(time);
+      // Cosmic dust particles (nebula clouds)
+      if (Math.random() < 0.05) spawnParticle();
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.life++;
+        p.x += p.vx;
+        p.y += p.vy;
 
-      // Stars
+        const lifeRatio = p.life / p.maxLife;
+        const fadeIn = Math.min(lifeRatio * 5, 1);
+        const fadeOut = Math.max(1 - (lifeRatio - 0.7) / 0.3, 0);
+        const alpha = p.opacity * fadeIn * (lifeRatio > 0.7 ? fadeOut : 1);
+
+        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+        grad.addColorStop(0, `hsla(${p.hue}, 60%, 30%, ${alpha})`);
+        grad.addColorStop(1, "transparent");
+        ctx.fillStyle = grad;
+        ctx.fillRect(p.x - p.size, p.y - p.size, p.size * 2, p.size * 2);
+
+        if (p.life >= p.maxLife) particles.splice(i, 1);
+      }
+
+      // Warp-speed stars flowing toward camera
       for (const star of stars) {
-        const twinkle = Math.sin(time * star.twinkleSpeed + star.twinkleOffset);
-        const alpha = star.opacity + twinkle * 0.3;
-        if (alpha <= 0) continue;
+        const prevZ = star.z;
+        star.z -= star.speed * 3;
 
-        // Slow drift
-        const dx = Math.sin(time * 0.00005 * star.z + star.twinkleOffset) * 15;
-        const dy = Math.cos(time * 0.00003 * star.z + star.twinkleOffset) * 10;
+        if (star.z <= 1) {
+          star.z = 1500;
+          star.x = (Math.random() - 0.5) * canvas.width * 2;
+          star.y = (Math.random() - 0.5) * canvas.height * 2;
+          continue;
+        }
 
-        const sx = star.x + dx;
-        const sy = star.y + dy;
+        const sx = (star.x / star.z) * 300 + cx;
+        const sy = (star.y / star.z) * 300 + cy;
+        const psx = (star.x / prevZ) * 300 + cx;
+        const psy = (star.y / prevZ) * 300 + cy;
 
+        // Star brightness based on depth
+        const brightness = 1 - star.z / 1500;
+        const alpha = brightness * 0.9;
+        const radius = brightness * 1.8 + 0.3;
+
+        // Draw trail line
         ctx.beginPath();
-        ctx.arc(sx, sy, star.size * star.z * 0.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200, 210, 255, ${Math.min(alpha, 1)})`;
+        ctx.moveTo(psx, psy);
+        ctx.lineTo(sx, sy);
+        ctx.strokeStyle = `rgba(180, 200, 255, ${alpha * star.trail})`;
+        ctx.lineWidth = radius * 0.6;
+        ctx.stroke();
+
+        // Draw star point
+        ctx.beginPath();
+        ctx.arc(sx, sy, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(220, 230, 255, ${alpha})`;
         ctx.fill();
 
-        // Glow for brighter stars
-        if (star.size > 1.5 && alpha > 0.5) {
-          const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, star.size * 3);
-          glow.addColorStop(0, `rgba(180, 200, 255, ${alpha * 0.15})`);
-          glow.addColorStop(1, "transparent");
-          ctx.fillStyle = glow;
-          ctx.fillRect(sx - star.size * 3, sy - star.size * 3, star.size * 6, star.size * 6);
+        // Glow for close stars
+        if (brightness > 0.7) {
+          const glowGrad = ctx.createRadialGradient(sx, sy, 0, sx, sy, radius * 4);
+          glowGrad.addColorStop(0, `rgba(150, 180, 255, ${(brightness - 0.7) * 0.3})`);
+          glowGrad.addColorStop(1, "transparent");
+          ctx.fillStyle = glowGrad;
+          ctx.beginPath();
+          ctx.arc(sx, sy, radius * 4, 0, Math.PI * 2);
+          ctx.fill();
         }
       }
 
       animId = requestAnimationFrame(draw);
     };
+
+    // Initial full clear
+    ctx.fillStyle = "rgb(5, 5, 15)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     resize();
     animId = requestAnimationFrame(draw);
