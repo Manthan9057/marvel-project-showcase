@@ -127,3 +127,10 @@
     border-color: var(--color-glow);
   }
 }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-12px) rotate(1deg); }
+  50% { transform: translateY(-6px) rotate(-1deg); }
+  75% { transform: translateY(-14px) rotate(0.5deg); }
+}
