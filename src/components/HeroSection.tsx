@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, MapPin, Download } from "lucide-react";
 import { resumeData } from "@/data/resume";
+import profileImg from "@/assets/profile.jpeg";
 
 export default function HeroSection() {
   return (
@@ -10,6 +11,18 @@ export default function HeroSection() {
       <div className="pointer-events-none absolute bottom-1/4 right-1/4 h-[300px] w-[400px] rounded-full bg-accent/5 blur-[100px]" />
 
       <div className="relative z-10 mx-auto max-w-3xl text-center">
+        {/* Profile Image */}
+        <div className="mb-8 flex justify-center">
+          <div className="relative">
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-primary to-accent opacity-60 blur-sm" />
+            <img
+              src={profileImg}
+              alt={resumeData.name}
+              className="relative h-32 w-32 rounded-full border-2 border-border object-cover md:h-40 md:w-40"
+            />
+          </div>
+        </div>
+
         <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-sm text-muted-foreground">
           <MapPin size={14} className="text-primary" />
           {resumeData.location}
@@ -35,6 +48,13 @@ export default function HeroSection() {
           >
             View Projects <ArrowRight size={16} />
           </Link>
+          <a
+            href="/Manthan_Jain_Resume.pdf"
+            download
+            className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-6 py-3 text-sm font-semibold text-primary transition-all hover:bg-primary/20"
+          >
+            <Download size={16} /> Download Resume
+          </a>
           <a
             href={`mailto:${resumeData.email}`}
             className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-6 py-3 text-sm font-semibold text-foreground transition-all hover:bg-surface-hover"
