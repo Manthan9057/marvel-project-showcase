@@ -1,12 +1,18 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, MapPin, Download } from "lucide-react";
+import { motion } from "framer-motion";
 import { resumeData } from "@/data/resume";
 import profileImg from "@/assets/profile.jpeg";
 
 export default function HeroSection() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-16">
-      <div className="relative z-10 mx-auto max-w-3xl text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="relative z-10 mx-auto max-w-3xl text-center"
+      >
         {/* Floating Profile Image */}
         <div className="mb-8 flex justify-center">
           <div className="relative animate-[float_6s_ease-in-out_infinite]">
@@ -67,7 +73,7 @@ export default function HeroSection() {
             Get in Touch
           </a>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

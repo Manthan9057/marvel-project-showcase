@@ -5,7 +5,8 @@ import ExperienceSection from "@/components/ExperienceSection";
 import SkillsSection from "@/components/SkillsSection";
 import HighlightsSection from "@/components/HighlightsSection";
 import Footer from "@/components/Footer";
-import StarfieldBackground from "@/components/StarfieldBackground";
+import OceanBackground from "@/components/OceanBackground";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -20,13 +21,21 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <StarfieldBackground />
+      <OceanBackground />
       <Navbar />
       <HeroSection />
-      <ExperienceSection />
-      <SkillsSection />
-      <HighlightsSection />
-      <Footer />
+      <ScrollReveal>
+        <ExperienceSection />
+      </ScrollReveal>
+      <ScrollReveal delay={0.1}>
+        <SkillsSection />
+      </ScrollReveal>
+      <ScrollReveal delay={0.1}>
+        <HighlightsSection />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Footer />
+      </ScrollReveal>
     </div>
   );
 }
