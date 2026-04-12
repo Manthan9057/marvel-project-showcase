@@ -1,28 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Navbar from "@/components/Navbar";
+import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import ProjectsSection from "@/components/ProjectsSection";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import ScrollProgress from "@/components/ScrollProgress";
 
-export const Route = createFileRoute("/projects")({
-  component: ProjectsPage,
+export const Route = createFileRoute("/contact")({
+  component: ContactPage,
   head: () => ({
     meta: [
-      { title: "Projects — Manthan Jain" },
-      { name: "description", content: "Explore projects built by Manthan Jain including full-stack apps, e-commerce platforms, and enterprise systems." },
+      { title: "Contact — Manthan Jain" },
+      { name: "description", content: "Get in touch with Manthan Jain for collaboration, freelance work, or job opportunities." },
     ],
   }),
 });
 
-function ProjectsPage() {
+function ContactPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <AnimatedBackground />
       <ScrollProgress />
       <Navbar />
       <div className="pt-16">
-        <ProjectsSection showAll />
+        <ContactSection />
       </div>
       <Footer />
     </div>
