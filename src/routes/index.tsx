@@ -10,6 +10,7 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import ScrollProgress from "@/components/ScrollProgress";
+import CursorGlow from "@/components/CursorGlow";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -24,6 +25,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <CursorGlow />
       <AnimatedBackground />
       <ScrollProgress />
       <Navbar />
