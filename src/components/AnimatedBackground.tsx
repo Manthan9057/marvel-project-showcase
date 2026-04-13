@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Star {
   x: number;
@@ -10,8 +10,14 @@ interface Star {
 
 export default function AnimatedBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -111,6 +117,8 @@ export default function AnimatedBackground() {
       window.removeEventListener("resize", resize);
     };
   }, []);
+
+  if (!mounted) return null;
 
   return (
     <canvas
