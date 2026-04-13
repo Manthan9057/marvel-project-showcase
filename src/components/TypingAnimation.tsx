@@ -7,7 +7,7 @@ interface TypingAnimationProps {
   pauseDuration?: number;
 }
 
-export default function TypingAnimation({ words, speed = 100, deleteSpeed = 50, pauseDuration = 2000 }: TypingAnimationProps) {
+export default function TypingAnimation({ words, speed = 100, deleteSpeed = 50, pauseDuration = 5000 }: TypingAnimationProps) {
   const [text, setText] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);

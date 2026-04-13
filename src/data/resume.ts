@@ -2,10 +2,8 @@ export const resumeData = {
   name: "Manthan Jain",
   role: "Software Developer | Full Stack Developer",
   typingRoles: [
+    "Software Developer",
     "Full Stack Developer",
-    "React Developer",
-    "Node.js Developer",
-    "UI/UX Enthusiast",
   ],
   location: "Jaipur, India",
   email: "jainmanthan134@gmail.com",
