@@ -116,7 +116,7 @@ export default function AnimatedBackground() {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [mounted]);
 
   if (!mounted) return null;
 
