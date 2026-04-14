@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function ExperienceSection() {
   return (
-    <section className="mx-auto max-w-4xl px-6 py-24">
+    <section id="experience" className="mx-auto max-w-4xl px-6 py-24">
       <SectionReveal>
         <h2 className="mb-4 text-center font-heading text-3xl font-bold tracking-tight md:text-4xl">
           Work <span className="text-gradient">Experience</span>

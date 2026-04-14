@@ -7,7 +7,7 @@ export default function ProjectsSection({ showAll = false }: { showAll?: boolean
   const projects = showAll ? resumeData.projects : resumeData.projects.filter((p) => p.featured);
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-24">
+    <section id="projects" className="mx-auto max-w-6xl px-6 py-24">
       <SectionReveal>
         <h2 className="mb-4 text-center font-heading text-3xl font-bold tracking-tight md:text-4xl">
           Featured <span className="text-gradient">Projects</span>

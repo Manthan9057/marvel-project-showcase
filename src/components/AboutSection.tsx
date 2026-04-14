@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function AboutSection() {
   return (
-    <section className="mx-auto max-w-5xl px-6 py-24">
+    <section id="about" className="mx-auto max-w-5xl px-6 py-24">
       <SectionReveal>
         <h2 className="mb-4 text-center font-heading text-3xl font-bold tracking-tight md:text-4xl">
           About <span className="text-gradient">Me</span>
