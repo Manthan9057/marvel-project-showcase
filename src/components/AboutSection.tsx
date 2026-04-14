@@ -6,9 +6,6 @@ export default function AboutSection() {
   return (
     <section className="mx-auto max-w-5xl px-6 py-24">
       <SectionReveal>
-        <h2 className="mb-4 text-center font-heading text-3xl font-bold tracking-tight md:text-4xl">
-          About <span className="text-gradient">Me</span>
-        </h2>
         <p className="mx-auto mb-14 max-w-2xl text-center text-muted-foreground leading-relaxed">
           {resumeData.summary}
         </p>
