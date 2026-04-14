@@ -1,4 +1,5 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 
@@ -44,22 +45,17 @@ export const Route = createRootRoute({
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0b20df8c-a120-4405-b710-5fcbd1d82358/id-preview-50c6251e--9b292034-8f4a-4ef1-ac92-af380ae624c8.lovable.app-1775906846579.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0b20df8c-a120-4405-b710-5fcbd1d82358/id-preview-50c6251e--9b292034-8f4a-4ef1-ac92-af380ae624c8.lovable.app-1775906846579.png" },
     ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
 });
 
-function RootShell({ children }: { children: React.ReactNode }) {
+function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <link rel="stylesheet" href={appCss} />
         <HeadContent />
       </head>
       <body>
