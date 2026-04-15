@@ -9,13 +9,16 @@ export default function ProjectsSection({ showAll = false }: { showAll?: boolean
   return (
     <section id="projects" className="mx-auto max-w-6xl px-6 py-24">
       <SectionReveal>
-        <h2 className="mb-4 text-center font-heading text-3xl font-bold tracking-tight md:text-4xl">
-          Featured <span className="text-gradient">Projects</span>
-        </h2>
-        <p className="mx-auto mb-14 max-w-lg text-center text-muted-foreground">
-          A selection of things I've built — from enterprise systems to full-stack apps.
-        </p>
+        <div className="sticky top-16 z-10 bg-background/80 backdrop-blur-md py-4 -mx-6 px-6">
+          <h2 className="mb-2 text-center font-heading text-3xl font-bold tracking-tight md:text-4xl">
+            Featured <span className="text-gradient">Projects</span>
+          </h2>
+          <p className="mx-auto max-w-lg text-center text-muted-foreground">
+            A selection of things I've built — from enterprise systems to full-stack apps.
+          </p>
+        </div>
       </SectionReveal>
+      <div className="mt-8" />
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project, i) => (

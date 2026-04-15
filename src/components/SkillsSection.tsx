@@ -6,13 +6,16 @@ export default function SkillsSection() {
   return (
     <section id="skills" className="mx-auto max-w-5xl px-6 py-24">
       <SectionReveal>
-        <h2 className="mb-4 text-center font-heading text-3xl font-bold tracking-tight md:text-4xl">
-          Skills & <span className="text-gradient">Tools</span>
-        </h2>
-        <p className="mx-auto mb-14 max-w-lg text-center text-muted-foreground">
-          Technologies I work with daily to build production-ready applications.
-        </p>
+        <div className="sticky top-16 z-10 bg-background/80 backdrop-blur-md py-4 -mx-6 px-6">
+          <h2 className="mb-2 text-center font-heading text-3xl font-bold tracking-tight md:text-4xl">
+            Skills & <span className="text-gradient">Tools</span>
+          </h2>
+          <p className="mx-auto max-w-lg text-center text-muted-foreground">
+            Technologies I work with daily to build production-ready applications.
+          </p>
+        </div>
       </SectionReveal>
+      <div className="mt-8" />
 
       <div className="grid gap-6 sm:grid-cols-2">
         {resumeData.skillCategories.map((cat, catIdx) => (
