@@ -4,7 +4,7 @@ import { resumeData } from "@/data/resume";
 export default function HighlightsSection() {
   return (
     <section id="highlights" className="mx-auto max-w-4xl px-6 py-24">
-      <div className="sticky top-16 z-10 bg-background/80 backdrop-blur-md py-4 -mx-6 px-6 mb-8">
+      <div className="sticky top-16 z-20 -mx-6 mb-8 bg-background/85 px-6 py-4 backdrop-blur-md">
         <h2 className="text-center font-heading text-3xl font-bold tracking-tight md:text-4xl">
           Key <span className="text-gradient">Highlights</span>
         </h2>
