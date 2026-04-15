@@ -7,13 +7,16 @@ export default function ExperienceSection() {
   return (
     <section id="experience" className="mx-auto max-w-4xl px-6 py-24">
       <SectionReveal>
-        <h2 className="mb-4 text-center font-heading text-3xl font-bold tracking-tight md:text-4xl">
-          Work <span className="text-gradient">Experience</span>
-        </h2>
-        <p className="mx-auto mb-14 max-w-lg text-center text-muted-foreground">
-          My professional journey building enterprise applications.
-        </p>
+        <div className="sticky top-16 z-10 bg-background/80 backdrop-blur-md py-4 -mx-6 px-6">
+          <h2 className="mb-2 text-center font-heading text-3xl font-bold tracking-tight md:text-4xl">
+            Work <span className="text-gradient">Experience</span>
+          </h2>
+          <p className="mx-auto max-w-lg text-center text-muted-foreground">
+            My professional journey building enterprise applications.
+          </p>
+        </div>
       </SectionReveal>
+      <div className="mt-8" />
 
       <div className="relative space-y-8 border-l-2 border-border pl-8">
         {resumeData.experience.map((exp, i) => (
